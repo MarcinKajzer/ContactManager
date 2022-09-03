@@ -60,6 +60,9 @@ namespace ContactManagerAPI.Entities
             {
                 eb.Property(c => c.Name).IsRequired().HasMaxLength(100);
             });
+
+            modelBuilder.Entity<IdentityUser>().
+                Property(u => u.Email).IsRequired();
         }
     }
 }
