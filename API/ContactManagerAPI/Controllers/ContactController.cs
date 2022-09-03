@@ -1,6 +1,7 @@
 ﻿using ContactManagerAPI.DTOs;
 using ContactManagerAPI.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ContactManagerAPI.Controllers
 {
@@ -48,6 +49,37 @@ namespace ContactManagerAPI.Controllers
 
             //Return status 200 after succesfull creation
             return Ok(contact);
+        }
+
+        [HttpGet]
+        [Route("Contacts/{email}")]
+        public IActionResult Get(string? email)
+        {
+            //reading contacts from database
+            var contacts = _dbContext.Contacts
+                .Include(c => c.Category)
+                .Include(c => c.SubCategory)
+                .Where(c => c.Email == email)
+                .ToList();
+
+            //creating empty list for DTOs
+            List<GetContactDTO>  getContactsDTOs = new List<GetContactDTO>();
+
+            //mapping contacts to contatDTOs
+            contacts.ForEach(c => getContactsDTOs.Add(new GetContactDTO {
+                Email = c.Email,
+                FirstName = c.FirstName, 
+                LastName = c.LastName,
+                PhoneNumber = c.PhoneNumber,
+                DateOfBirth = c.DateOfBirth,
+                CategoryId = c.CategoryId,
+                CategoryName = c.Category.Name,
+                SubCategoryId = c.SubCategoryId,
+                SubCategoryName = c.SubCategory.Name
+            }));
+
+            //returning mapped result
+            return Ok(getContactsDTOs);
         }
     }
 }
