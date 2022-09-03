@@ -44,7 +44,7 @@ namespace ContactManagerAPI.Controllers
                 return BadRequest(new
                 {
                     errorMessage = "Cannot create new contact."
-                }); ;
+                });
             }
 
             //Return status 200 after succesfull creation
@@ -80,6 +80,83 @@ namespace ContactManagerAPI.Controllers
 
             //returning mapped result
             return Ok(getContactsDTOs);
+        }
+
+        [HttpPut]
+        [Route("Contacts")]
+        public IActionResult Update(CreateContactDTO contactDTO)
+        {
+            //Model validation acording to properies atributes
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            //Reading contact from database
+            var contact = _dbContext.Contacts.Where(c => c.Email == contactDTO.Email).FirstOrDefault();
+
+            //Checking if contact exists
+            if (contact == null)
+                return NotFound();
+
+            //Updating properties
+            contact.Email = contactDTO.Email;
+            contact.FirstName = contactDTO.FirstName;
+            contact.LastName = contactDTO.LastName;
+            contact.PhoneNumber = contactDTO.PhoneNumber;
+            contact.DateOfBirth = contactDTO.DateOfBirth;
+            contact.CategoryId = contactDTO.CategoryId;
+            contact.SubCategoryId = contactDTO.SubCategoryId;
+
+            //Saving changes to database
+            try
+            {
+                _dbContext.SaveChanges();
+            }
+            catch
+            {
+                //Return 400 status if some error occurs
+                return BadRequest(new
+                {
+                    errorMessage = "Cannot update the contact."
+                });
+            }
+            
+            //Return status ok if updated succesfully
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("Contacts/{email}")]
+        public IActionResult Delete(string email)
+        {
+            if (email == null)
+                return BadRequest();
+
+            //Reading contact from database
+            var contact = _dbContext.Contacts
+                .Where(c => c.Email == email)
+                .FirstOrDefault();
+
+            //Checking if contact exists
+            if (contact == null)
+                NotFound();
+
+            //Delete from database
+            try
+            {
+                _dbContext.Remove(contact);
+                _dbContext.SaveChanges();
+            }
+            catch
+            {
+                //Return 400 status if some error occurs
+                return BadRequest(new
+                {
+                    errorMessage = "Cannot delete the contact."
+                });
+            }
+
+            //Return statsu ok if deleted succesfully
+            return Ok();
         }
     }
 }
