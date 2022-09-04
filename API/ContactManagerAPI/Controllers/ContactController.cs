@@ -16,7 +16,7 @@ namespace ContactManagerAPI.Controllers
 
         [HttpPost]
         [Route("Contacts")]
-        
+        [Authorize]
         public IActionResult Create(CreateContactDTO contactDTO)
         {
             //Model validation acording to properies atributes
@@ -118,6 +118,7 @@ namespace ContactManagerAPI.Controllers
 
         [HttpPut]
         [Route("Contacts")]
+        [Authorize]
         public IActionResult Update(CreateContactDTO contactDTO)
         {
             //Model validation acording to properies atributes
@@ -160,6 +161,7 @@ namespace ContactManagerAPI.Controllers
 
         [HttpDelete]
         [Route("Contacts/{email}")]
+        [Authorize]
         public IActionResult Delete(string email)
         {
             if (email == null)
