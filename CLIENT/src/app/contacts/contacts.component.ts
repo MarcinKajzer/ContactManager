@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ContactInterface } from '../Interfaces/contactInterface';
+import { AuthService } from '../services/auth.service';
 import { ContactService } from '../services/contact.service';
 
 @Component({
@@ -12,8 +13,12 @@ export class ContactsComponent implements OnInit {
   contacts: Array<ContactInterface> = [];
   expandedContact: string = "";
   isFormVisible: boolean = false;
+  isLoggedIn: boolean = false;
 
-  constructor(private contactsService: ContactService) { }
+  constructor(private contactsService: ContactService, private authService: AuthService) {
+    this.authService.isLoggedIn.subscribe(value => this.isLoggedIn = value);
+    this.authService.checkIfIsLoggedIn();
+  }
 
   ngOnInit(): void {
     this.contactsService.getContacts().subscribe(result => {

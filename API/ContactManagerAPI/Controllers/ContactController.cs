@@ -23,6 +23,13 @@ namespace ContactManagerAPI.Controllers
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            var contactFromDb = _dbContext.Contacts
+                .Where(c => c.Email == contactDTO.Email)
+                .FirstOrDefault();
+
+            if (contactFromDb != null)
+                return BadRequest("User with the given email already exists.");
+
             Contact contact = new Contact()
             {
                 Email = contactDTO.Email,

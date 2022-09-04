@@ -1,9 +1,11 @@
-<button *ngIf="!isFormVisible; else close_btn" (click)="changeFormVisibility(true)">Add new</button>
-<ng-template #close_btn>
-    <button (click)="changeFormVisibility(false)">Close</button>
-</ng-template>
-
-<app-add-contact *ngIf="isFormVisible"></app-add-contact>
+<div *ngIf="isLoggedIn">
+    <button *ngIf="!isFormVisible; else close_btn" (click)="changeFormVisibility(true)">Add new</button>
+    <ng-template #close_btn>
+        <button (click)="changeFormVisibility(false)">Close</button>
+    </ng-template>
+    
+    <app-add-contact *ngIf="isFormVisible"></app-add-contact>
+</div>
 
 <table>
     <tr>
@@ -20,7 +22,7 @@
             <td>{{contact.lastName}}</td>
             <td>{{contact.email}}</td>
             <td>{{contact.phoneNumber}}</td>
-            <td>
+            <td *ngIf="isLoggedIn">
                 <button>Edit</button>
                 <button (click)="deleteContact(contact.email, $event)">Delete</button>
             </td>

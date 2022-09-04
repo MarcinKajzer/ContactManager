@@ -28,7 +28,7 @@
     align-items: center;
   }
 
-  .toolbar img, #sing-in-link {
+  .toolbar img, .auth-link {
     margin: 0 16px;
   }
 
@@ -72,10 +72,13 @@
     />
     <a routerLink="contacts">Contacts List</a>
   </div>
-  <div>
-    <a routerLink="login" id="sing-in-link">Sign In</a>
-    <a routerLink="register" id="sing-in-link">Sign Up</a>
+  <div *ngIf="!isLoggedIn; else logoutLink">
+    <a routerLink="login" class="auth-link">Sign In</a>
+    <a routerLink="register" class="auth-link">Sign Up</a>
   </div>
+  <ng-template #logoutLink>
+    <a (click)="logout()" class="auth-link">Logout</a>
+  </ng-template>
 </div>
 
 <div class="content" role="main">
