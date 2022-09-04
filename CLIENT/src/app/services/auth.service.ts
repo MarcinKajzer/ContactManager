@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { LoginInterface } from '../Interfaces/loginInterface';
 import { RegisterInterface } from '../Interfaces/registerInterface'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
