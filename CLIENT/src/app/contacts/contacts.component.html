@@ -22,7 +22,7 @@
             <td>{{contact.phoneNumber}}</td>
             <td>
                 <button>Edit</button>
-                <button (click)="deleteContact(contact.email)">Delete</button>
+                <button (click)="deleteContact(contact.email, $event)">Delete</button>
             </td>
         </tr>
 
@@ -31,7 +31,7 @@
                 <div [id]="contact.email" *ngIf="contact.email == expandedContact">
                     <p>Date of birth: {{contact.dateOfBirth}}</p>
                     <p>Category: {{contact.categoryName}}</p>
-                    <p>Subcategory: {{contact.subCategoryName}}</p>
+                    <p *ngIf="contact.subCategoryName != null">Subcategory: {{contact.subCategoryName}}</p>
                 </div>
             </td>
         </tr>

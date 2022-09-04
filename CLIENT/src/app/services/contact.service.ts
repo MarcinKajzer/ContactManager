@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, tap } from 'rxjs';
+import { CategoryInterface } from '../Interfaces/categoryInterface';
 import { ContactInterface } from '../Interfaces/contactInterface';
 
 @Injectable({
@@ -24,6 +25,7 @@ export class ContactService {
 
   create(contact: ContactInterface){
     return this.http.post(this.address, contact).subscribe(() => {
+      console.log("test")
       this.get();
     });
   }
@@ -32,5 +34,14 @@ export class ContactService {
     return this.http.delete(this.address + "/" + email).subscribe(() => {
       this.get();
     });
+  }
+
+  getContactCategories(){
+    console.log("xxx")
+    return this.http.get<Array<CategoryInterface>>("https://localhost:7025/Categories");
+  }
+
+  getContactSubCategories(categoryId: number){
+    return this.http.get<Array<CategoryInterface>>("https://localhost:7025/Subcategories/" + categoryId);
   }
 }

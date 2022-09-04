@@ -31,7 +31,9 @@ export class ContactsComponent implements OnInit {
     this.isFormVisible = isVisible;
   }
 
-  deleteContact(email: string){
+  deleteContact(email: string, event:any){
+
+    event.stopPropagation();
 
     if (confirm("Are you sure you want to delete the contact ?")) {
       this.contactsService.delete(email);

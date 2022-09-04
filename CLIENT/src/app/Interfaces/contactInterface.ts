@@ -6,6 +6,6 @@ export interface ContactInterface{
     dateOfBirth: string,
     categoryId: number,
     categoryName: string,
-    subCategoryId: number,
-    subCategoryName: string,
+    subCategoryId?: number,
+    subCategoryName?: string,
 }

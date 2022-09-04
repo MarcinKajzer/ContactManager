@@ -5,8 +5,16 @@
 
     <input [(ngModel)]="contact.dateOfBirth" placeholder="Date of birth">
     <input [(ngModel)]="contact.phoneNumber" type="text" placeholder="Phone number">
-    <input [(ngModel)]="contact.categoryId" placeholder="Category id">
-    <input [(ngModel)]="contact.subCategoryId" placeholder="Subcategory id">
+
+    <select [(ngModel)]="contact.categoryId" (change)="selectCategory(contact.categoryId)">
+        <option *ngFor="let category of contactCategories" [value]="category.id">{{category.name}}</option>
+    </select>
+
+    <select *ngIf="contact.categoryId == 1" [(ngModel)]="contact.subCategoryId">
+        <option *ngFor="let subCategory of contactSubCategories" [value]="subCategory.id">{{subCategory.name}}</option>
+    </select>
+    
+    <input *ngIf="contact.categoryId == 3" [(ngModel)]="contact.subCategoryName" placeholder="Subcategory">
 
     <button (click)="confirm()">Create</button>
 </div>

@@ -23,7 +23,6 @@ namespace ContactManagerAPI.Controllers
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            //Map DTO to Contact entity
             Contact contact = new Contact()
             {
                 Email = contactDTO.Email,
@@ -31,9 +30,22 @@ namespace ContactManagerAPI.Controllers
                 LastName = contactDTO.LastName,
                 PhoneNumber = contactDTO.PhoneNumber,
                 DateOfBirth = contactDTO.DateOfBirth,
-                CategoryId = contactDTO.CategoryId,
-                SubCategoryId = contactDTO.SubCategoryId
+                CategoryId = contactDTO.CategoryId
             };
+
+            //If category 'other' is selected and subcategory has been added then create new subcategory
+            if (contactDTO.CategoryId == 3 && contactDTO.SubCategoryName != null)
+            {
+                contact.SubCategory = new SubCategory
+                {
+                    Name = contactDTO.SubCategoryName,
+                    CategoryId = 3
+                };
+            }
+            else if (contactDTO.CategoryId == 2)
+                contact.SubCategoryId = null;
+            else if (contactDTO.CategoryId == 1)
+                contact.SubCategoryId = contactDTO.SubCategoryId;
 
             //Save new contact to database via dbContext
             try
@@ -41,16 +53,16 @@ namespace ContactManagerAPI.Controllers
                 _dbContext.Contacts.Add(contact);
                 _dbContext.SaveChanges();
             }
-            catch
+            catch(Exception e)
             {
                 return BadRequest(new
                 {
-                    errorMessage = "Cannot create new contact."
+                    errorMessage = e.InnerException.Message
                 });
             }
 
             //Return status 200 after succesfull creation
-            return Ok(contact);
+            return Ok(new { email = contact.Email });
         }
 
         [HttpGet]
@@ -109,7 +121,7 @@ namespace ContactManagerAPI.Controllers
                 CategoryId = c.CategoryId,
                 CategoryName = c.Category.Name,
                 SubCategoryId = c.SubCategoryId,
-                SubCategoryName = c.SubCategory.Name
+                SubCategoryName = c.SubCategory != null ? c.SubCategory.Name : null
             }));
 
             //returning mapped result
@@ -192,6 +204,48 @@ namespace ContactManagerAPI.Controllers
 
             //Return statsu ok if deleted succesfully
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("Categories")]
+        public IActionResult GetCategories()
+        {
+            //reading categories from database
+            var categories = _dbContext.Categories.ToList();
+
+            //mapping category to categoryDTO
+            List<CategoryDTO> categoryDTOs = new List<CategoryDTO>();
+
+            categories.ForEach(c => categoryDTOs.Add(new CategoryDTO
+            {
+                Id = c.Id,
+                Name = c.Name,
+            }));
+
+            //returning mapped result
+            return Ok(categoryDTOs);
+        }
+
+        [HttpGet]
+        [Route("Subcategories/{categoryId}")]
+        public IActionResult GetSubCategories(int categoryId)
+        {
+            //reading subcategories from database
+            var subCategories = _dbContext.SubCategories
+                .Where(sc => sc.CategoryId == categoryId)
+                .ToList();
+
+            //mapping subcategory to categoryDTO
+            List<CategoryDTO> categoryDTOs = new List<CategoryDTO>();
+
+            subCategories.ForEach(c => categoryDTOs.Add(new CategoryDTO
+            {
+                Id = c.Id,
+                Name = c.Name,
+            }));
+
+            //returning mapped result
+            return Ok(categoryDTOs);
         }
     }
 }
