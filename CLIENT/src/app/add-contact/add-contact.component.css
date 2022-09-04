@@ -1,4 +1,4 @@
-#add-contact-form{
+/* #add-contact-form{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -9,4 +9,8 @@
     width: 100%;
     padding: 3px;
     margin: 5px 0;
+} */
+
+.add-new-contact-form{
+    transform: scale(.9);
 }

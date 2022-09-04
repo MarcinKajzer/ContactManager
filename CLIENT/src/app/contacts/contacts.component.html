@@ -1,8 +1,10 @@
 
-<div *ngIf="isLoggedIn" >
+<div *ngIf="isLoggedIn" style="display: flex; justify-content: center; flex-wrap: wrap">
     <button *ngIf="!isFormVisible; else close_btn" (click)="changeFormVisibility(true)">+ Add new</button>
     <ng-template #close_btn>
-        <button (click)="changeFormVisibility(false)">Close</button>
+        <div style="width: 100%;">
+            <button (click)="changeFormVisibility(false)" style="margin: 0 auto; display: block;">Close</button>
+        </div>
     </ng-template>
     
     <app-add-contact *ngIf="isFormVisible" (isFormVisible)="changeFormVisibility(false)"></app-add-contact>
@@ -32,9 +34,11 @@
         <tr *ngIf="contact.email == expandedContact">
             <td colspan="5">
                 <div [id]="contact.email" >
-                    <p>Date of birth: {{contact.dateOfBirth}}</p>
-                    <p>Category: {{contact.categoryName}}</p>
-                    <p *ngIf="contact.subCategoryName != null">Subcategory: {{contact.subCategoryName}}</p>
+                    <p><span class="bold">Date of birth:</span> {{contact.dateOfBirth}}</p>
+                    <p><span class="bold">Category:</span> {{contact.categoryName}}</p>
+                    <p *ngIf="contact.subCategoryName != null">
+                        <span class="bold">Subcategory:</span> {{contact.subCategoryName}}
+                    </p>
                 </div>
             </td>
         </tr>
