@@ -1,19 +1,20 @@
-<div *ngIf="isLoggedIn">
-    <button *ngIf="!isFormVisible; else close_btn" (click)="changeFormVisibility(true)">Add new</button>
+
+<div *ngIf="isLoggedIn" >
+    <button *ngIf="!isFormVisible; else close_btn" (click)="changeFormVisibility(true)">+ Add new</button>
     <ng-template #close_btn>
         <button (click)="changeFormVisibility(false)">Close</button>
     </ng-template>
     
-    <app-add-contact *ngIf="isFormVisible"></app-add-contact>
+    <app-add-contact *ngIf="isFormVisible" (isFormVisible)="changeFormVisibility(false)"></app-add-contact>
 </div>
 
-<table>
+<table cellSpacing="0">
     <tr>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Email</th>
         <th>Phone Number</th>
-        <th>Actions</th>
+        <th *ngIf="isLoggedIn">Actions</th>
     </tr>
     
     <ng-container *ngFor="let contact of contacts" >
@@ -23,14 +24,14 @@
             <td>{{contact.email}}</td>
             <td>{{contact.phoneNumber}}</td>
             <td *ngIf="isLoggedIn">
-                <button>Edit</button>
-                <button (click)="deleteContact(contact.email, $event)">Delete</button>
+                <button class="edit-button">Edit</button>
+                <button class="delete-button" (click)="deleteContact(contact.email, $event)">Delete</button>
             </td>
         </tr>
 
-        <tr>
+        <tr *ngIf="contact.email == expandedContact">
             <td colspan="5">
-                <div [id]="contact.email" *ngIf="contact.email == expandedContact">
+                <div [id]="contact.email" >
                     <p>Date of birth: {{contact.dateOfBirth}}</p>
                     <p>Category: {{contact.categoryName}}</p>
                     <p *ngIf="contact.subCategoryName != null">Subcategory: {{contact.subCategoryName}}</p>

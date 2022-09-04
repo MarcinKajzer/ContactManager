@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CategoryInterface } from '../Interfaces/categoryInterface';
 import { ContactInterface } from '../Interfaces/contactInterface';
 import { ContactService } from '../services/contact.service';
@@ -15,12 +15,7 @@ export class AddContactComponent {
   contactCategories: Array<CategoryInterface> = [];
   contactSubCategories: Array<CategoryInterface> = [];
 
-  ngOnInit(): void {
-    this.contactService.getContactCategories().subscribe(res => this.contactCategories = res);
-    this.contactService.getContactSubCategories(1).subscribe(res => this.contactSubCategories = res);
-  }
-
-  contact: ContactInterface = {
+  initialContact: ContactInterface = {
     email: "",
     firstName: "",
     lastName: "",
@@ -31,6 +26,18 @@ export class AddContactComponent {
     subCategoryId: 1, 
     subCategoryName: undefined
   }
+
+  contact = { ... this.initialContact };
+
+  @Output()
+  isFormVisible = new EventEmitter<boolean>();
+
+  ngOnInit(): void {
+    this.contactService.getContactCategories().subscribe(res => this.contactCategories = res);
+    this.contactService.getContactSubCategories(1).subscribe(res => this.contactSubCategories = res);
+  }
+
+  
 
   selectCategory(categoryId: number){
     if(categoryId != 1)
@@ -45,5 +52,7 @@ export class AddContactComponent {
 
   confirm(){
     this.contactService.create(this.contact);
+    this.contact =  { ... this.initialContact };
+    this.isFormVisible.emit(false);
   }
 }
