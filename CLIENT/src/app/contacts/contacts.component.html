@@ -1,0 +1,31 @@
+<button>Add new </button>
+
+<table>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Actions</th>
+    </tr>
+    
+    <ng-container *ngFor="let contact of contacts" >
+        <tr (click)="showDetails(contact.email)">
+            <td>{{contact.firstName}}</td>
+            <td>{{contact.lastName}}</td>
+            <td>{{contact.email}}</td>
+            <td>{{contact.phoneNumber}}</td>
+        </tr>
+
+        <tr>
+            <td colspan="5">
+                <div [id]="contact.email" *ngIf="contact.email == expandedContact">
+                    <p>Date of birth: {{contact.dateOfBirth}}</p>
+                    <p>Category: {{contact.categoryName}}</p>
+                    <p>Subcategory: {{contact.subCategoryName}}</p>
+                </div>
+            </td>
+        </tr>
+       
+    </ng-container>
+</table>
