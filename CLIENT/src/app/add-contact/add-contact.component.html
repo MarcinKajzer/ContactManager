@@ -1,0 +1,12 @@
+<div>
+    <input [(ngModel)]="contact.email" type="text" placeholder="Email address">
+    <input [(ngModel)]="contact.firstName" placeholder="First Name">
+    <input [(ngModel)]="contact.lastName" placeholder="Last Name">
+
+    <input [(ngModel)]="contact.dateOfBirth" placeholder="Date of birth">
+    <input [(ngModel)]="contact.phoneNumber" type="text" placeholder="Phone number">
+    <input [(ngModel)]="contact.categoryId" placeholder="Category id">
+    <input [(ngModel)]="contact.subCategoryId" placeholder="Subcategory id">
+
+    <button (click)="confirm()">Create</button>
+</div>

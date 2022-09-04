@@ -16,8 +16,8 @@ namespace ContactManagerAPI.Controllers
 
         [HttpPost]
         [Route("Contacts")]
-        [Authorize]
-        public IActionResult Create(CreateContactDTO contactDTO)
+        //[Authorize]
+        public IActionResult Create([FromBody] CreateContactDTO contactDTO)
         {
             //Model validation acording to properies atributes
             if(!ModelState.IsValid)
@@ -119,7 +119,7 @@ namespace ContactManagerAPI.Controllers
         [HttpPut]
         [Route("Contacts")]
         [Authorize]
-        public IActionResult Update(CreateContactDTO contactDTO)
+        public IActionResult Update([FromBody] CreateContactDTO contactDTO)
         {
             //Model validation acording to properies atributes
             if (!ModelState.IsValid)

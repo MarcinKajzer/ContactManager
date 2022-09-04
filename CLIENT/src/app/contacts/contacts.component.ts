@@ -11,18 +11,23 @@ export class ContactsComponent implements OnInit {
 
   contacts: Array<ContactInterface> = [];
   expandedContact: string = "";
+  isFormVisible: boolean = false;
 
   constructor(private contactsService: ContactService) { }
 
   ngOnInit(): void {
-    this.contactsService.get().subscribe(result => {
-      console.log(result);
+    this.contactsService.getContacts().subscribe(result => {
       this.contacts = result;
-    })
+    });
+
+    this.contactsService.get();
   }
 
   showDetails(email:string){
-    this.expandedContact = email;
+    this.expandedContact = this.expandedContact == email ? "" : email;
   }
 
+  changeFormVisibility(isVisible: boolean){
+    this.isFormVisible = isVisible;
+  }
 }

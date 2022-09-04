@@ -1,4 +1,9 @@
-<button>Add new </button>
+<button *ngIf="!isFormVisible; else close_btn" (click)="changeFormVisibility(true)">Add new</button>
+<ng-template #close_btn>
+    <button (click)="changeFormVisibility(false)">Close</button>
+</ng-template>
+
+<app-add-contact *ngIf="isFormVisible"></app-add-contact>
 
 <table>
     <tr>
