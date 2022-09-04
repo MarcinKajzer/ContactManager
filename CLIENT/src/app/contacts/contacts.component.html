@@ -20,6 +20,10 @@
             <td>{{contact.lastName}}</td>
             <td>{{contact.email}}</td>
             <td>{{contact.phoneNumber}}</td>
+            <td>
+                <button>Edit</button>
+                <button (click)="deleteContact(contact.email)">Delete</button>
+            </td>
         </tr>
 
         <tr>

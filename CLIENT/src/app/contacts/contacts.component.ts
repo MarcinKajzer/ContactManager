@@ -30,4 +30,11 @@ export class ContactsComponent implements OnInit {
   changeFormVisibility(isVisible: boolean){
     this.isFormVisible = isVisible;
   }
+
+  deleteContact(email: string){
+
+    if (confirm("Are you sure you want to delete the contact ?")) {
+      this.contactsService.delete(email);
+    }
+  }
 }

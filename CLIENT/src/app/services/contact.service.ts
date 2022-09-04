@@ -19,11 +19,18 @@ export class ContactService {
 
   get(email?: string){
     let address = email != null ? this.address += "/" + email : this.address;
-  
     this.http.get<Array<ContactInterface>>(address).subscribe(res => this.contacts.next(res))
   }
 
   create(contact: ContactInterface){
-    return this.http.post(this.address, contact);
+    return this.http.post(this.address, contact).subscribe(() => {
+      this.get();
+    });
+  }
+
+  delete(email: string){
+    return this.http.delete(this.address + "/" + email).subscribe(() => {
+      this.get();
+    });
   }
 }

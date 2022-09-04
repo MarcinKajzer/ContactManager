@@ -24,8 +24,6 @@ export class AddContactComponent{
   }
 
   confirm(){
-    this.contactService.create(this.contact).subscribe(() => {
-      this.contactService.get();
-    })
+    this.contactService.create(this.contact);
   }
 }

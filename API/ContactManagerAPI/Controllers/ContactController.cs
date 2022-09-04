@@ -161,7 +161,6 @@ namespace ContactManagerAPI.Controllers
 
         [HttpDelete]
         [Route("Contacts/{email}")]
-        [Authorize]
         public IActionResult Delete(string email)
         {
             if (email == null)
