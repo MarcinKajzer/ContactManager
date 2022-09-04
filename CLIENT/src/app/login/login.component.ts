@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { LoginInterface } from '../Interfaces/loginInterface';
 
 @Component({
   selector: 'app-login',
@@ -7,13 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent{
 
-  loginData = {
-    email: '',
-    password: ''
-  }
+  constructor(private authService: AuthService) {}
+
+  loginData : LoginInterface = {email: '', password: ''}
 
   confirm(){
-    console.log(this.loginData)
+    this.authService.login(this.loginData);
   }
 
 }

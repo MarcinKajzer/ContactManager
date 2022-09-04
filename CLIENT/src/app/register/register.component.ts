@@ -1,4 +1,6 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { RegisterInterface } from '../Interfaces/registerInterface';
 
 @Component({
   selector: 'app-register',
@@ -7,13 +9,11 @@ import { Component} from '@angular/core';
 })
 export class RegisterComponent{
 
-  registerData = {
-    email: '',
-    password: '',
-    confirmPassword: ''
-  }
+  constructor(private authService: AuthService){}
+
+  registerData : RegisterInterface = {email: '', password: '', confirmPassword: ''}
 
   confirm(){
-    console.log(this.registerData)
+    this.authService.register(this.registerData);
   }
 }
