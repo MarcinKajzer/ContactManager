@@ -1,5 +1,6 @@
 ﻿using ContactManagerAPI.DTOs;
 using ContactManagerAPI.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,7 @@ namespace ContactManagerAPI.Controllers
 
         [HttpPost]
         [Route("Contacts")]
+        
         public IActionResult Create(CreateContactDTO contactDTO)
         {
             //Model validation acording to properies atributes
@@ -53,22 +55,54 @@ namespace ContactManagerAPI.Controllers
 
         [HttpGet]
         [Route("Contacts/{email}")]
-        public IActionResult Get(string? email)
+        public IActionResult Get(string email)
+        {
+            //reading contacts from database
+            var contact = _dbContext.Contacts
+                .Include(c => c.Category)
+                .Include(c => c.SubCategory)
+                .Where(c => c.Email == email)
+                .FirstOrDefault();
+
+            if (contact == null)
+                return NotFound();
+
+            //mapping contact to contatDTO
+            GetContactDTO contactDTO = new GetContactDTO
+            {
+                Email = contact.Email,
+                FirstName = contact.FirstName,
+                LastName = contact.LastName,
+                PhoneNumber = contact.PhoneNumber,
+                DateOfBirth = contact.DateOfBirth,
+                CategoryId = contact.CategoryId,
+                CategoryName = contact.Category.Name,
+                SubCategoryId = contact.SubCategoryId,
+                SubCategoryName = contact.SubCategory.Name
+            };
+           
+            //returning mapped result
+            return Ok(contactDTO);
+        }
+
+        [HttpGet]
+        [Route("Contacts")]
+        public IActionResult GetAll()
         {
             //reading contacts from database
             var contacts = _dbContext.Contacts
                 .Include(c => c.Category)
                 .Include(c => c.SubCategory)
-                .Where(c => c.Email == email)
                 .ToList();
 
             //creating empty list for DTOs
-            List<GetContactDTO>  getContactsDTOs = new List<GetContactDTO>();
+            List<GetContactDTO> getContactsDTOs = new List<GetContactDTO>();
 
             //mapping contacts to contatDTOs
-            contacts.ForEach(c => getContactsDTOs.Add(new GetContactDTO {
+            contacts.ForEach(c => getContactsDTOs.Add(new GetContactDTO
+            {
                 Email = c.Email,
-                FirstName = c.FirstName, 
+                FirstName = c.FirstName,
                 LastName = c.LastName,
                 PhoneNumber = c.PhoneNumber,
                 DateOfBirth = c.DateOfBirth,
