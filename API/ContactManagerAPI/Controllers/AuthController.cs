@@ -19,7 +19,7 @@ namespace ContactManagerAPI.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register(RegisterUserDTO registerDTO)
+        public async Task<IActionResult> Register([FromBody] RegisterUserDTO registerDTO)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -48,7 +48,7 @@ namespace ContactManagerAPI.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login(LoginUserDTO loginDTO)
+        public async Task<IActionResult> Login([FromBody] LoginUserDTO loginDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

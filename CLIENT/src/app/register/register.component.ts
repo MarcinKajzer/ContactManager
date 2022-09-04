@@ -14,6 +14,8 @@ export class RegisterComponent{
   registerData : RegisterInterface = {email: '', password: '', confirmPassword: ''}
 
   confirm(){
-    this.authService.register(this.registerData);
+    this.authService.register(this.registerData).subscribe(result => {
+      console.log(result);
+    });
   }
 }

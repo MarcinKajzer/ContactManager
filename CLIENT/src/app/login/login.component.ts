@@ -14,7 +14,8 @@ export class LoginComponent{
   loginData : LoginInterface = {email: '', password: ''}
 
   confirm(){
-    this.authService.login(this.loginData);
+    this.authService.login(this.loginData).subscribe(result => {
+      sessionStorage.setItem("jwt", (<any>result).token);
+    });
   }
-
 }

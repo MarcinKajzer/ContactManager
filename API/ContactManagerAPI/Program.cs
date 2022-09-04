@@ -52,6 +52,18 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "myPolicy",
+                      builder =>
+                      {
+                          builder
+                            .WithOrigins("http://localhost:4200") // specifying the allowed origin
+                            .AllowAnyMethod()
+                            .AllowAnyHeader(); // allowing any header to be sent
+                      });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -63,6 +75,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("myPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
