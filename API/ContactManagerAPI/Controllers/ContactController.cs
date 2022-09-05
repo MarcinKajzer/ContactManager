@@ -16,7 +16,7 @@ namespace ContactManagerAPI.Controllers
 
         [HttpPost]
         [Route("Contacts")]
-        //[Authorize]
+        [Authorize]
         public IActionResult Create([FromBody] CreateContactDTO contactDTO)
         {
             //Model validation acording to properies atributes
@@ -137,6 +137,7 @@ namespace ContactManagerAPI.Controllers
 
         [HttpPut]
         [Route("Contacts")]
+        [Authorize]
         public IActionResult Update([FromBody] CreateContactDTO contactDTO)
         {
             //Model validation acording to properies atributes
@@ -178,9 +179,6 @@ namespace ContactManagerAPI.Controllers
             else 
                 contact.SubCategoryId = null;
             
-            
-            
-
             //Saving changes to database
             try
             {
@@ -201,6 +199,7 @@ namespace ContactManagerAPI.Controllers
 
         [HttpDelete]
         [Route("Contacts/{email}")]
+        [Authorize]
         public IActionResult Delete(string email)
         {
             if (email == null)
@@ -236,6 +235,7 @@ namespace ContactManagerAPI.Controllers
 
         [HttpGet]
         [Route("Categories")]
+        [Authorize]
         public IActionResult GetCategories()
         {
             //reading categories from database
@@ -256,6 +256,7 @@ namespace ContactManagerAPI.Controllers
 
         [HttpGet]
         [Route("Subcategories/{categoryId}")]
+        [Authorize]
         public IActionResult GetSubCategories(int categoryId)
         {
             //reading subcategories from database

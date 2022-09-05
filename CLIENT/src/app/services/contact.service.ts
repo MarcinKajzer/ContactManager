@@ -21,6 +21,7 @@ export class ContactService {
   create(contact: ContactInterface){
     return this.http.post(this.address, contact).subscribe(() => {
       this.get();
+      alert("Contact created succesfully.")
     });
   }
 
@@ -32,17 +33,18 @@ export class ContactService {
   update(contact: ContactInterface){
     return this.http.put(this.address, contact).subscribe(() => {
       this.get();
+      alert("Contact updated succesfully.")
     });
   }
 
   delete(email: string){
     return this.http.delete(this.address + "/" + email).subscribe(() => {
       this.get();
+      alert("Contact deleted succesfully.");
     });
   }
 
   getContactCategories(){
-    console.log("xxx")
     return this.http.get<Array<CategoryInterface>>("https://localhost:7025/Categories");
   }
 

@@ -17,7 +17,7 @@ export class ContactsComponent implements OnInit {
   isFormVisible: boolean = false;
   
   isEdit: boolean = false;
-  contactToEdit: any = null;
+  contactToEdit: ContactInterface | null = null;
 
   constructor(private contactsService: ContactService, private authService: AuthService) {
     this.authService.isLoggedIn.subscribe(value => this.isLoggedIn = value);

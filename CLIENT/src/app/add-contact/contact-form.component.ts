@@ -30,7 +30,7 @@ export class AddContactComponent {
   contact = { ... this.initialContact };
 
   @Input()
-  contactInput = null;
+  contactInput: ContactInterface | null = null;
 
   @Input()
   isEditForm = false;
