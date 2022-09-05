@@ -11,6 +11,18 @@ button{
     cursor: pointer;
 }
 
+button:disabled{
+    border: solid 1px gray;
+}
+
+
+button:disabled:hover{
+    background: none;
+    border: solid 1px gray;
+    cursor: default;
+}
+
+
 button:hover{
     background-color: rgba(0,0,0,.1);
     border-color: rgba(0,0,0,0);

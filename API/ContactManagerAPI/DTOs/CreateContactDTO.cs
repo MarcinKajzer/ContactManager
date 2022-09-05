@@ -7,6 +7,7 @@ namespace ContactManagerAPI.DTOs
         [Required]
         [MaxLength(100)]
         [DataType(DataType.EmailAddress)]
+        [RegularExpression("^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$", ErrorMessage = "Invalid email format.")]
         public string Email { get; set; }
 
         [Required]
@@ -18,6 +19,7 @@ namespace ContactManagerAPI.DTOs
         public string LastName { get; set; }
 
         [Required]
+        [MinLength(7)]
         [MaxLength(9)]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }

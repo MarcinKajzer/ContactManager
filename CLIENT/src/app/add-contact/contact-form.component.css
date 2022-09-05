@@ -1,16 +1,3 @@
-/* #add-contact-form{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    max-width: 300px;
-}
-
-#add-contact-form input, #add-contact-form select, #add-contact-form button {
-    width: 100%;
-    padding: 3px;
-    margin: 5px 0;
-} */
-
 .add-new-contact-form{
     transform: scale(.9);
 }
