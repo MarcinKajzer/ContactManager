@@ -51,7 +51,7 @@ namespace ContactManagerAPI.Controllers
         public async Task<IActionResult> Login([FromBody] LoginUserDTO loginDTO)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return BadRequest("Invalid email or password");
 
             var user = await _userManager.FindByNameAsync(loginDTO.Email);
             if (user != null && await _userManager.CheckPasswordAsync(user, loginDTO.Password))

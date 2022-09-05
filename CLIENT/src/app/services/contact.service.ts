@@ -25,7 +25,6 @@ export class ContactService {
 
   create(contact: ContactInterface){
     return this.http.post(this.address, contact).subscribe(() => {
-      console.log("test")
       this.get();
     });
   }

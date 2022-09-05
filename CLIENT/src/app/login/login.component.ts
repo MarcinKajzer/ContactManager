@@ -15,12 +15,20 @@ export class LoginComponent{
   loginData : LoginInterface = {email: '', password: ''}
 
   confirm(){
-    this.authService.login(this.loginData).subscribe(result => {
-      sessionStorage.setItem("token", (<any>result).token);
-      sessionStorage.setItem("expires_at", (<any>result).expiration);
-      this.authService.checkIfIsLoggedIn();
+    this.authService.login(this.loginData).subscribe(
+      result => {
 
-      this.router.navigate(['/contacts']);
-    });
+        console.log(result);
+
+        sessionStorage.setItem("token", (<any>result).token);
+        sessionStorage.setItem("expires_at", (<any>result).expiration);
+        this.authService.checkIfIsLoggedIn();
+
+        this.router.navigate(['/contacts']);
+      },
+      error => {
+        alert(error.error);
+        this.loginData = {email: '', password: ''}
+      });
   }
 }

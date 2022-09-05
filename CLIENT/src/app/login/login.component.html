@@ -1,7 +1,31 @@
 <div class="form-container">
     <h1>Sign In</h1>
-    <input [(ngModel)]="loginData.email" type="text" placeholder="Email address">
-    <input [(ngModel)]="loginData.password" type="password" placeholder="Password">
-    <button (click)="confirm()">Sign Up</button>
+    <input [(ngModel)]="loginData.email" email="true" placeholder="Email address" required minlength="5" #email="ngModel">
+    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert">
+        <div *ngIf="email.errors?.['required']">
+            Email address is required.
+        </div>
+        <div *ngIf="email.errors?.['minlength']">
+            Name must be at least 5 characters long.
+        </div>
+        <div *ngIf="email.errors?.['email']">
+            Invalid email format
+        </div>
+    </div>
+
+    <input [(ngModel)]="loginData.password" type="password" placeholder="Password" required minlength="8" maxlength="32" #password="ngModel">
+    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert">
+        <div *ngIf="password.errors?.['required']">
+            Password is required.
+        </div>
+        <div *ngIf="password.errors?.['minlength']">
+            Name must be at least 8 characters long.
+        </div>
+    </div>
+
+    <button (click)="confirm()" [disabled]="password.invalid || email.invalid">Sign Up</button>
+
+
+   
 </div>
 
