@@ -164,7 +164,8 @@ namespace ContactManagerAPI.Controllers
             //If category 'other' is selected and subcategory has been added then create new subcategory
            
             if (contactDTO.CategoryId == 3 && contactDTO.SubCategoryName != null &&
-                contact.SubCategory != null && contactDTO.SubCategoryName != contact.SubCategory.Name)
+                (contact.SubCategory != null && contactDTO.SubCategoryName != contact.SubCategory.Name || 
+                contact.SubCategory == null))
             {
                 contact.SubCategory = new SubCategory
                 {
@@ -172,10 +173,12 @@ namespace ContactManagerAPI.Controllers
                     CategoryId = 3
                 };
             }
-            else if (contactDTO.CategoryId == 2)
-                contact.SubCategoryId = null;
             else if (contactDTO.CategoryId == 1)
                 contact.SubCategoryId = contactDTO.SubCategoryId;
+            else 
+                contact.SubCategoryId = null;
+            
+            
             
 
             //Saving changes to database
