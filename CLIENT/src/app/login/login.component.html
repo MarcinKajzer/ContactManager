@@ -6,7 +6,7 @@
             Email address is required.
         </div>
         <div *ngIf="email.errors?.['minlength']">
-            Name must be at least 5 characters long.
+            Email must be at least 5 characters long.
         </div>
         <div *ngIf="email.errors?.['email']">
             Invalid email format
@@ -19,13 +19,10 @@
             Password is required.
         </div>
         <div *ngIf="password.errors?.['minlength']">
-            Name must be at least 8 characters long.
+            Password must be at least 8 characters long.
         </div>
     </div>
 
-    <button (click)="confirm()" [disabled]="password.invalid || email.invalid">Sign Up</button>
-
-
-   
+    <button (click)="confirm()" [disabled]="password.invalid || email.invalid">Sign In</button>
 </div>
 

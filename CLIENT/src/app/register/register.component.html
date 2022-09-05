@@ -1,7 +1,40 @@
 <div class="form-container">
     <h1>Sign Up</h1>
-    <input [(ngModel)]="registerData.email" type="text" placeholder="Email address">
-    <input [(ngModel)]="registerData.password" type="password" placeholder="Password">
-    <input [(ngModel)]="registerData.confirmPassword" type="password" placeholder="Confirm password">
+    <input [(ngModel)]="registerData.email" email="true" placeholder="Email address" required minlength="5" #email="ngModel">
+    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert">
+        <div *ngIf="email.errors?.['required']">
+            Email address is required.
+        </div>
+        <div *ngIf="email.errors?.['minlength']">
+            Email must be at least 5 characters long.
+        </div>
+        <div *ngIf="email.errors?.['email']">
+            Invalid email format
+        </div>
+    </div>
+
+    <input [(ngModel)]="registerData.password" type="password" placeholder="Password" required minlength="8" maxlength="32" #password="ngModel">
+    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert">
+        <div *ngIf="password.errors?.['required']">
+            Password is required.
+        </div>
+        <div *ngIf="password.errors?.['minlength']">
+            Password must be at least 8 characters long.
+        </div>
+    </div>
+
+    <input [(ngModel)]="registerData.confirmPassword" type="password" placeholder="Confirm password" required minlength="8" maxlength="32" #confirm_password="ngModel">
+    <div *ngIf="confirm_password.invalid && (confirm_password.dirty || confirm_password.touched)" class="alert">
+        <div *ngIf="confirm_password.errors?.['required']">
+            Confirm password.
+        </div>
+        <div *ngIf="confirm_password.errors?.['minlength']">
+            Password must be at least 8 characters long.
+        </div>
+    </div>
+    <div *ngIf="password.value != confirm_password.value && confirm_password.value != ''" class="alert">
+        Confirm password does not match.
+    </div>
+
     <button (click)="confirm()">Sign Up</button>
 </div>

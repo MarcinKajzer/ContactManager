@@ -30,7 +30,6 @@ export class AuthService {
   }
 
   checkIfIsLoggedIn() {
-    console.log("test")
     const expiration = sessionStorage.getItem("expires_at");
 
     if(expiration == null){

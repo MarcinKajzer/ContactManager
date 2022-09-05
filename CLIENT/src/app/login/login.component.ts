@@ -17,9 +17,6 @@ export class LoginComponent{
   confirm(){
     this.authService.login(this.loginData).subscribe(
       result => {
-
-        console.log(result);
-
         sessionStorage.setItem("token", (<any>result).token);
         sessionStorage.setItem("expires_at", (<any>result).expiration);
         this.authService.checkIfIsLoggedIn();

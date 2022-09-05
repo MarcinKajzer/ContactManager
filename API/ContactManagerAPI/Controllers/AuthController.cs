@@ -22,7 +22,7 @@ namespace ContactManagerAPI.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterUserDTO registerDTO)
         {
             if(!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return BadRequest("Invalid register data");
 
             var userExists = await _userManager.FindByEmailAsync(registerDTO.Email);
 
@@ -43,7 +43,10 @@ namespace ContactManagerAPI.Controllers
                 return BadRequest(errors);
             }
                
-            return Ok("User created succesfully.");
+            return Ok(new
+            {
+                message = "User created succesfully."
+            });
         }
 
         [HttpPost]
