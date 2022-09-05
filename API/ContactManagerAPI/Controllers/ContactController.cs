@@ -20,7 +20,7 @@ namespace ContactManagerAPI.Controllers
         public IActionResult Create([FromBody] CreateContactDTO contactDTO)
         {
             //Model validation acording to properies atributes
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var contactFromDb = _dbContext.Contacts
@@ -60,7 +60,7 @@ namespace ContactManagerAPI.Controllers
                 _dbContext.Contacts.Add(contact);
                 _dbContext.SaveChanges();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return BadRequest(new
                 {
@@ -99,7 +99,7 @@ namespace ContactManagerAPI.Controllers
                 SubCategoryId = contact.SubCategoryId,
                 SubCategoryName = contact.SubCategory.Name
             };
-           
+
             //returning mapped result
             return Ok(contactDTO);
         }
@@ -137,7 +137,6 @@ namespace ContactManagerAPI.Controllers
 
         [HttpPut]
         [Route("Contacts")]
-        [Authorize]
         public IActionResult Update([FromBody] CreateContactDTO contactDTO)
         {
             //Model validation acording to properies atributes
@@ -145,7 +144,10 @@ namespace ContactManagerAPI.Controllers
                 return BadRequest(ModelState);
 
             //Reading contact from database
-            var contact = _dbContext.Contacts.Where(c => c.Email == contactDTO.Email).FirstOrDefault();
+            var contact = _dbContext.Contacts
+                .Where(c => c.Email == contactDTO.Email)
+                .Include(c => c.SubCategory)
+                .FirstOrDefault();
 
             //Checking if contact exists
             if (contact == null)
@@ -158,7 +160,23 @@ namespace ContactManagerAPI.Controllers
             contact.PhoneNumber = contactDTO.PhoneNumber;
             contact.DateOfBirth = contactDTO.DateOfBirth;
             contact.CategoryId = contactDTO.CategoryId;
-            contact.SubCategoryId = contactDTO.SubCategoryId;
+
+            //If category 'other' is selected and subcategory has been added then create new subcategory
+           
+            if (contactDTO.CategoryId == 3 && contactDTO.SubCategoryName != null &&
+                contact.SubCategory != null && contactDTO.SubCategoryName != contact.SubCategory.Name)
+            {
+                contact.SubCategory = new SubCategory
+                {
+                    Name = contactDTO.SubCategoryName,
+                    CategoryId = 3
+                };
+            }
+            else if (contactDTO.CategoryId == 2)
+                contact.SubCategoryId = null;
+            else if (contactDTO.CategoryId == 1)
+                contact.SubCategoryId = contactDTO.SubCategoryId;
+            
 
             //Saving changes to database
             try

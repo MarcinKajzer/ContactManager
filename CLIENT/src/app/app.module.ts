@@ -9,7 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ContactsComponent } from './contacts/contacts.component';
-import { AddContactComponent } from './add-contact/add-contact.component';
+import { AddContactComponent } from './add-contact/contact-form.component';
 
 @NgModule({
   declarations: [

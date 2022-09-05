@@ -7,7 +7,7 @@
         </div>
     </ng-template>
     
-    <app-add-contact *ngIf="isFormVisible" (isFormVisible)="changeFormVisibility(false)"></app-add-contact>
+    <app-add-contact *ngIf="isFormVisible" (isFormVisible)="changeFormVisibility(false)" [contactInput]="contactToEdit" [isEditForm]="isEdit"></app-add-contact>
 </div>
 
 <table cellSpacing="0">
@@ -19,6 +19,12 @@
         <th *ngIf="isLoggedIn">Actions</th>
     </tr>
     
+    <tr *ngIf="contacts.length == 0">
+        <td colspan="5">
+            <span>No contacts found</span>
+        </td>
+    </tr>
+
     <ng-container *ngFor="let contact of contacts" >
         <tr (click)="showDetails(contact.email)">
             <td>{{contact.firstName}}</td>
@@ -26,7 +32,7 @@
             <td>{{contact.email}}</td>
             <td>{{contact.phoneNumber}}</td>
             <td *ngIf="isLoggedIn">
-                <button class="edit-button">Edit</button>
+                <button class="edit-button" (click)="editContact(contact, $event)">Edit</button>
                 <button class="delete-button" (click)="deleteContact(contact.email, $event)">Delete</button>
             </td>
         </tr>

@@ -1,5 +1,7 @@
 <div class="form-container add-new-contact-form">
-    <h2>+ Add new contact</h2>
+    <h2 *ngIf="isEditForm">Edit contact</h2>
+    <h2 *ngIf="!isEditForm">+ Add new contact</h2>
+
     <input [(ngModel)]="contact.email" type="text" placeholder="Email address">
     <input [(ngModel)]="contact.firstName" placeholder="First Name">
     <input [(ngModel)]="contact.lastName" placeholder="Last Name">
@@ -17,5 +19,8 @@
     
     <input *ngIf="contact.categoryId == 3" [(ngModel)]="contact.subCategoryName" placeholder="Subcategory">
 
-    <button (click)="confirm()">Create</button>
+    <button (click)="confirm()">
+        <span *ngIf="isEditForm">Edit</span>
+        <span *ngIf="!isEditForm">Create</span>
+    </button>
 </div>

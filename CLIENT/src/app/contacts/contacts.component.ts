@@ -10,10 +10,14 @@ import { ContactService } from '../services/contact.service';
 })
 export class ContactsComponent implements OnInit {
 
+  isLoggedIn: boolean = false;
+
   contacts: Array<ContactInterface> = [];
   expandedContact: string = "";
   isFormVisible: boolean = false;
-  isLoggedIn: boolean = false;
+  
+  isEdit: boolean = false;
+  contactToEdit: any = null;
 
   constructor(private contactsService: ContactService, private authService: AuthService) {
     this.authService.isLoggedIn.subscribe(value => this.isLoggedIn = value);
@@ -34,10 +38,19 @@ export class ContactsComponent implements OnInit {
 
   changeFormVisibility(isVisible: boolean){
     this.isFormVisible = isVisible;
+    this.contactToEdit = null;
+    this.isEdit = false;
+  }
+
+  editContact(contact: ContactInterface, event:any ){
+    event.stopPropagation()
+
+    this.contactToEdit = { ... contact };
+    this.isEdit = true;
+    this.isFormVisible = true;
   }
 
   deleteContact(email: string, event:any){
-
     event.stopPropagation();
 
     if (confirm("Are you sure you want to delete the contact ?")) {

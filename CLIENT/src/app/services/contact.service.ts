@@ -18,13 +18,19 @@ export class ContactService {
     return this.contacts.asObservable();
   }
 
+  create(contact: ContactInterface){
+    return this.http.post(this.address, contact).subscribe(() => {
+      this.get();
+    });
+  }
+
   get(email?: string){
     let address = email != null ? this.address += "/" + email : this.address;
     this.http.get<Array<ContactInterface>>(address).subscribe(res => this.contacts.next(res))
   }
 
-  create(contact: ContactInterface){
-    return this.http.post(this.address, contact).subscribe(() => {
+  update(contact: ContactInterface){
+    return this.http.put(this.address, contact).subscribe(() => {
       this.get();
     });
   }

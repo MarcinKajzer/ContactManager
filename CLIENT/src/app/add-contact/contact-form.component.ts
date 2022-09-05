@@ -1,12 +1,12 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CategoryInterface } from '../Interfaces/categoryInterface';
 import { ContactInterface } from '../Interfaces/contactInterface';
 import { ContactService } from '../services/contact.service';
 
 @Component({
   selector: 'app-add-contact',
-  templateUrl: './add-contact.component.html',
-  styleUrls: ['./add-contact.component.css']
+  templateUrl: './contact-form.component.html',
+  styleUrls: ['./contact-form.component.css']
 })
 export class AddContactComponent {
 
@@ -29,6 +29,12 @@ export class AddContactComponent {
 
   contact = { ... this.initialContact };
 
+  @Input()
+  contactInput = null;
+
+  @Input()
+  isEditForm = false;
+
   @Output()
   isFormVisible = new EventEmitter<boolean>();
 
@@ -37,7 +43,15 @@ export class AddContactComponent {
     this.contactService.getContactSubCategories(1).subscribe(res => this.contactSubCategories = res);
   }
 
-  
+  ngOnChanges(){
+    if(this.contactInput != null){
+      this.contact = this.contactInput;
+      this.selectCategory(this.contact.categoryId);
+    }
+    else{
+      this.contact = { ... this.initialContact };
+    }
+  }
 
   selectCategory(categoryId: number){
     if(categoryId != 1)
@@ -51,7 +65,13 @@ export class AddContactComponent {
   }
 
   confirm(){
-    this.contactService.create(this.contact);
+    if(this.isEditForm){
+      this.contactService.update(this.contact);
+    }
+    else{
+      this.contactService.create(this.contact);
+    }
+    
     this.contact =  { ... this.initialContact };
     this.isFormVisible.emit(false);
   }
