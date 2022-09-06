@@ -19,10 +19,15 @@ export class ContactService {
   }
 
   create(contact: ContactInterface){
-    return this.http.post(this.address, contact).subscribe(() => {
-      this.get();
-      alert("Contact created succesfully.")
-    });
+    return this.http.post(this.address, contact).subscribe(
+      () => {
+        this.get();
+        alert("Contact created succesfully.")
+      },
+      error => {
+        alert(error.error)
+      }
+    );
   }
 
   get(email?: string){
@@ -31,17 +36,27 @@ export class ContactService {
   }
 
   update(contact: ContactInterface){
-    return this.http.put(this.address, contact).subscribe(() => {
-      this.get();
-      alert("Contact updated succesfully.")
-    });
+    return this.http.put(this.address, contact).subscribe(
+      () => {
+        this.get();
+        alert("Contact updated succesfully.")
+      }, 
+      error => {
+        alert(error.error);
+      }
+    );
   }
 
   delete(email: string){
-    return this.http.delete(this.address + "/" + email).subscribe(() => {
-      this.get();
-      alert("Contact deleted succesfully.");
-    });
+    return this.http.delete(this.address + "/" + email).subscribe(
+      () => {
+        this.get();
+        alert("Contact deleted succesfully.");
+      },
+      error => {
+          alert(error.error)
+      }
+    );
   }
 
   getContactCategories(){

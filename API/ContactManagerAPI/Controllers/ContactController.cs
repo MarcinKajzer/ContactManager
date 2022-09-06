@@ -21,7 +21,7 @@ namespace ContactManagerAPI.Controllers
         {
             //Model validation acording to properies atributes
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return BadRequest("Invalid contact data.");
 
             var contactFromDb = _dbContext.Contacts
                 .Where(c => c.Email == contactDTO.Email)
@@ -142,7 +142,7 @@ namespace ContactManagerAPI.Controllers
         {
             //Model validation acording to properies atributes
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return BadRequest("Invalid contact data.");
 
             //Reading contact from database
             var contact = _dbContext.Contacts

@@ -2,7 +2,7 @@
     <h2 *ngIf="isEditForm">Edit contact</h2>
     <h2 *ngIf="!isEditForm">+ Add new contact</h2>
 
-    <input [(ngModel)]="contact.email" type="text" placeholder="Email address" required type="email" minlength="5" #email="ngModel">
+    <input [(ngModel)]="contact.email" type="text" placeholder="Email address" required email="true" minlength="5" #email="ngModel">
     <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert">
         <div *ngIf="email.errors?.['required']">
             Email address is required.
@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <input [(ngModel)]="contact.firstName" placeholder="First Name" required type="email" minlength="5" #first_name="ngModel">
+    <input [(ngModel)]="contact.firstName" placeholder="First Name" required minlength="5" #first_name="ngModel">
     <div *ngIf="first_name.invalid && (first_name.dirty || first_name.touched)" class="alert">
         <div *ngIf="first_name.errors?.['required']">
             First Name is required.
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <input [(ngModel)]="contact.lastName" placeholder="Last Name" required type="email" minlength="5" #last_name="ngModel">
+    <input [(ngModel)]="contact.lastName" placeholder="Last Name" required  minlength="5" #last_name="ngModel">
     <div *ngIf="last_name.invalid && (last_name.dirty || last_name.touched)" class="alert">
         <div *ngIf="last_name.errors?.['required']">
             Last Name is required.
@@ -35,9 +35,9 @@
         </div>
     </div>
 
-    <input [(ngModel)]="contact.dateOfBirth" placeholder="Date of birth">
+    <input [(ngModel)]="contact.dateOfBirth" placeholder="Date of birth (yyyy-mm-dd)">
 
-    <input [(ngModel)]="contact.phoneNumber" type="text" placeholder="Phone number" required type="email" minlength="7" maxlength="9" #phone_number="ngModel">
+    <input [(ngModel)]="contact.phoneNumber" type="text" placeholder="Phone number" required  minlength="7" maxlength="9" #phone_number="ngModel">
     <div *ngIf="phone_number.invalid && (phone_number.dirty || phone_number.touched)" class="alert">
         <div *ngIf="phone_number.errors?.['required']">
             Phone number is required.

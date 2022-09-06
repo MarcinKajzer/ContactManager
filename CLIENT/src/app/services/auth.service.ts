@@ -11,12 +11,11 @@ export class AuthService {
 
   constructor(private http: HttpClient){}
 
-  private apiUrl: string = "";
-  private headers = new HttpHeaders().set('Content-Type', 'application/json');
+  private apiUrl: string = "https://localhost:7025";
   isLoggedIn = new Subject<boolean>;
 
   login(loginData : LoginInterface){
-    return this.http.post("https://localhost:7025/login", loginData);
+    return this.http.post(this.apiUrl + "/login", loginData);
   }
 
   logOut = () => {
@@ -26,7 +25,7 @@ export class AuthService {
   }
 
   register(registerData: RegisterInterface){
-    return this.http.post("https://localhost:7025/register", registerData);
+    return this.http.post(this.apiUrl + "/register", registerData);
   }
 
   checkIfIsLoggedIn() {
