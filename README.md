@@ -4,7 +4,7 @@
 
 An application that performs the following functions: 
 
-1. New user registratio.
+1. New user registration.
 2. Login existing user.
 3. CRUD of contacts.
 4. Creating, updating, deleting available for authorized users only. 
