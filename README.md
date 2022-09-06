@@ -32,3 +32,15 @@ An application that performs the following functions:
 3. Open Package Manager Console and run "update-database" command.
 4. Run project. 
 5. Go to CLIENT directory and execute command "ng serve" in order to run SPA project.
+
+## API structure: 
+
+1. Controllers: 
+- AuthController - responsible for creating new and authenticating existing users.
+- ContactController - composed of contacts CRUD actions.
+2. Entities - c# representation of database tables.
+3. DTOs - objects responsible for transfering data from and to the client app and hide database entities details.
+4. Helpers: 
+- TokenGenerator - class responsible for generating JWT.
+5. DbContext - class containing configuration of database like column definitions, default values etc.
+5. Migrations - the piece of code responsible for creating the database based on the configuration in dbcontext.
